@@ -27,19 +27,19 @@
 			%}
 		</p>
 		<p>
-			<i class="fas fa-link"></i> {% if venue.venue.website %}<a href="{{ venue.website }}" target="_blank">{{
-				venue.venue.website }}</a>{% else %}No Website{% endif %}
+			<i class="fas fa-link"></i> {% if venue.venue.website_link %}<a href="{{ venue.venue.website_link }}"
+				target="_blank">{{
+				venue.venue.website_link }}</a>{% else %}No Website{% endif %}
 		</p>
 		<p>
 			<i class="fab fa-facebook-f"></i> {% if venue.venue.facebook_link %}<a href="{{ venue.facebook_link }}"
 				target="_blank">{{ venue.venue.facebook_link }}</a>{% else %}No Facebook Link{% endif %}
 		</p>
-		{% if venue.venue.seeking_talent %}
+		{% if venue.venue.looking_for_talent %}
 		<div class="seeking">
 			<p class="lead">Currently seeking talent</p>
 			<div class="description">
-				<i class="fas fa-quote-left"></i> {{ venue.venue.seeking_description }} <i
-					class="fas fa-quote-right"></i>
+				<i class="fas fa-quote-left"></i> {{ venue.venue.description }} <i class="fas fa-quote-right"></i>
 			</div>
 		</div>
 		{% else %}

@@ -120,7 +120,7 @@ def create_venue_form():
 @app.route('/venues/create', methods=['POST'])
 def create_venue_submission():
     error = False
-    form = VenueForm()
+    form = VenueForm(request.form)
     try:
         venue = Venue(
             name=form.name.data,
@@ -131,8 +131,8 @@ def create_venue_submission():
             image_link=form.image_link.data,
             facebook_link=form.facebook_link.data,
             website_link=form.website_link.data,
-            looking_for_venue=form.seeking_venue,
-            description=form.seeking_description,
+            looking_for_venue=form.seeking_talent.data,
+            description=form.seeking_description.data,
             genres=form.genres.data
         )
         db.session.add(venue)
@@ -246,7 +246,7 @@ def edit_artist(artist_id):
 
 @app.route('/artists/<int:artist_id>/edit', methods=['POST'])
 def edit_artist_submission(artist_id):
-    form = ArtistForm()
+    form = ArtistForm(request.form)
     # TODO: take values from the form submitted, and update existing
     # artist record with ID <artist_id> using the new attributes
     error = False
@@ -292,7 +292,7 @@ def edit_venue(venue_id):
 def edit_venue_submission(venue_id):
     # TODO: take values from the form submitted, and update existing
     # venue record with ID <venue_id> using the new attributes
-    form = VenueForm()
+    form = VenueForm(request.form)
     error = False
     try:
         venue = Venue.query.get(venue_id)
@@ -305,7 +305,7 @@ def edit_venue_submission(venue_id):
         venue.image_link = form.image_link.data
         venue.facebook_link = form.facebook_link.data
         venue.website_link = form.website_link.data
-        venue.looking_for_venue = form.seeking_venue.data
+        venue.looking_for_venue = form.seeking_talent.data
         venue.description = form.seeking_description.data
         venue.genres = form.genres.data
         db.session.commit()
@@ -315,7 +315,7 @@ def edit_venue_submission(venue_id):
     finally:
         db.session.close()
     if not error:
-        flash('Venue ' + request.form['name'] + ' was successfully updated!')
+        flash('Venue ' + form.name.data + ' was successfully updated!')
     else:
         flash('Venue ' + request.form['name'] +
               ' was not  updated!')
@@ -334,10 +334,9 @@ def create_artist_form():
 @app.route('/artists/create', methods=['POST'])
 def create_artist_submission():
     error = False
-    form = ArtistForm()
+    form = ArtistForm(request.form)
 
     try:
-
         artist = Artist(
             name=form.name.data,
             city=form.city.data,
@@ -346,8 +345,8 @@ def create_artist_submission():
             image_link=form.image_link.data,
             facebook_link=form.facebook_link.data,
             website_link=form.website_link.data,
-            looking_for_venue=form.seeking_venue,
-            description=form.seeking_description,
+            looking_for_venue=form.seeking_venue.data,
+            description=form.seeking_description.data,
             genres=form.genres.data
         )
         db.session.add(artist)
@@ -360,7 +359,7 @@ def create_artist_submission():
     finally:
         db.session.close()
     if not error:
-        flash('Artist was ' + request.form['name'] + ' successfully listed!')
+        flash('Artist was ' + form.name.data + ' successfully listed!')
 
     else:
         flash('An error occurred. Artist ' +
@@ -393,12 +392,13 @@ def create_shows():
 def create_show_submission():
     # called to create new shows in the db, upon submitting new show listing form
     # TODO: insert form data as a new Show record in the db, instead
+    form = ShowForm(request.form)
     error = False
     try:
         show = Shows(
-            venue_id=request.form.get("venue_id"),
-            artist_id=request.form.get("artist_id"),
-            start_time=request.form.get("start_time")
+            venue_id=form.venue_id.data,
+            artist_id=form.artist_id.data,
+            start_time=form.start_time.data
         )
         db.session.add(show)
         db.session.commit()

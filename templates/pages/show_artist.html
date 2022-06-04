@@ -10,8 +10,8 @@
 			ID: {{ artist.artist.id }}
 		</p>
 		<div class="genres">
-			{% for genre in artist.artist.genres %}
-			<span class="genre">{{ genre }}</span>
+			{% for genre in artist.artist.genres[1:-1].split(",") %}
+			<span class="genre"> {{ genre}}</span>
 			{% endfor %}
 		</div>
 		<p>
@@ -22,9 +22,9 @@
 			endif %}
 		</p>
 		<p>
-			<i class="fas fa-link"></i> {% if artist.artist.website %}<a href="{{ artist.artist.website }}"
+			<i class="fas fa-link"></i> {% if artist.artist.website_link %}<a href="{{ artist.artist.website_link }}"
 				target="_blank">{{
-				artist.artist.website }}</a>{% else %}No Website{% endif %}
+				artist.artist.website_link }}</a>{% else %}No Website{% endif %}
 		</p>
 		<p>
 			<i class="fab fa-facebook-f"></i> {% if artist.artist.facebook_link %}<a
@@ -32,12 +32,11 @@
 			%}No
 			Facebook Link{% endif %}
 		</p>
-		{% if artist.artist.seeking_venue %}
+		{% if artist.artist.looking_for_venue %}
 		<div class="seeking">
 			<p class="lead">Currently seeking performance venues</p>
 			<div class="description">
-				<i class="fas fa-quote-left"></i> {{ artist.artist.seeking_description }} <i
-					class="fas fa-quote-right"></i>
+				<i class="fas fa-quote-left"></i> {{ artist.artist.description }} <i class="fas fa-quote-right"></i>
 			</div>
 		</div>
 		{% else %}
