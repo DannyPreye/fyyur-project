@@ -30,5 +30,6 @@ SQLAlchemy==1.4.36
 tk==0.1.0
 toml==0.10.2
 virtualenv==20.14.1
+waitress==2.1.2
 Werkzeug==2.1.2
 WTForms==3.0.1
